@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3FF0C5D7-80CA-40FD-91E5-F77CE179F602</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Filter</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>A2D5C155346D84FAC30E5C732F184CB119D70BA9</key>
+		<string>https://github.com/Sara1102/Filter.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Filter.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>A2D5C155346D84FAC30E5C732F184CB119D70BA9</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Sara1102/Filter.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>A2D5C155346D84FAC30E5C732F184CB119D70BA9</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>A2D5C155346D84FAC30E5C732F184CB119D70BA9</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Filter</string>
+		</dict>
+	</array>
+</dict>
+</plist>
