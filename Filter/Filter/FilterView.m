@@ -97,6 +97,10 @@ static const NSString *selectItemtwo = @"two";
         
         [_bottomBtn setBackgroundColor:[UIColor whiteColor]];
         
+        UIImageView *line = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 0.5)];
+        [line setBackgroundColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:233.0/255.0]];
+        [_bottomBtn addSubview:line];
+        
     }
     
     return _bottomBtn;
@@ -401,6 +405,8 @@ static const NSString *selectItemtwo = @"two";
     if (tableView == self.oneClassTableView||tableView == self.towClassTableView1) {
         
         static NSString *oneCellID = @"oneCellID";
+        NSInteger vlineTag = 10000;
+        NSInteger lineTag = 10001;
         UITableViewCell *oneCell = [tableView dequeueReusableCellWithIdentifier:oneCellID];
         if (!oneCell) {
             oneCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:oneCellID];
@@ -411,13 +417,17 @@ static const NSString *selectItemtwo = @"two";
             
             UIImageView *line = [[UIImageView alloc]initWithFrame:CGRectMake(0, 39.5, [UIScreen mainScreen].bounds.size.width, 0.5)];
             [line setBackgroundColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0]];
+            [line setTag:lineTag];
             [oneCell addSubview:line];
             
-            UIView *selectBk = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 40)];
-            [selectBk setBackgroundColor:[UIColor whiteColor]];
+            UIImageView *vline = [[UIImageView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2-0.5, 0,0.5 ,40 )];
+            vline.tag = vlineTag;
+            [vline setBackgroundColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0]];
+            [vline setHidden:YES];
+            [oneCell.contentView addSubview:vline];
             
-            oneCell.selectedBackgroundView  = selectBk;
-            oneCell.textLabel.highlightedTextColor = [UIColor colorWithRed:245/255 green:67/255 blue:59/255 alpha:1.0];
+           oneCell.selectedBackgroundView  = [self tableViewSelectView:tableView];
+            oneCell.textLabel.highlightedTextColor = [UIColor colorWithRed:245.0/255.0 green:67.0/255.0 blue:59.0/255.0 alpha:1.0];
             
             
         }
@@ -425,6 +435,23 @@ static const NSString *selectItemtwo = @"two";
 
         FilterItemModel *info = [data objectAtIndex:[indexPath row]];
         [oneCell.textLabel setText:info.name];
+        
+         UIImageView *vLine = (UIImageView *)[oneCell.contentView viewWithTag:vlineTag];
+        
+        if (tableView == self.oneClassTableView) {
+            [vLine setHidden:YES];
+            
+        }else
+        {
+            
+            [vLine setHidden:NO];
+        }
+
+        UIImageView *line = (UIImageView *)[oneCell viewWithTag:lineTag];
+        [line setHidden:NO];
+        if (indexPath.row  == data.count - 1 ) {
+            [line setHidden:YES];
+        }
    
         return oneCell;
         
@@ -433,6 +460,7 @@ static const NSString *selectItemtwo = @"two";
     {
         static NSString *twoCellID = @"twoCellID";
         UITableViewCell *twoCell = [tableView dequeueReusableCellWithIdentifier:twoCellID];
+        NSInteger lineTag = 100000;
         if (!twoCell) {
             twoCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:twoCellID];
             twoCell.textLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1.0];
@@ -441,12 +469,12 @@ static const NSString *selectItemtwo = @"two";
             
             UIImageView *line = [[UIImageView alloc]initWithFrame:CGRectMake(0, 39.5, [UIScreen mainScreen].bounds.size.width, 0.5)];
             [line setBackgroundColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0]];
+            [line setTag:lineTag];
             [twoCell addSubview:line];
             twoCell.textLabel.highlightedTextColor = [UIColor colorWithRed:245.0/255.0 green:67.0/255.0 blue:59.0/255.0 alpha:1.0];
             
-            UIView *selectBk = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 40)];
-            [selectBk setBackgroundColor:[UIColor whiteColor]];
-            twoCell.selectedBackgroundView  = selectBk;
+            twoCell.selectedBackgroundView  = [self tableViewSelectView:tableView];
+
         }
         NSArray *data = [dic objectForKey:FilterViewDataValue];
     
@@ -456,6 +484,13 @@ static const NSString *selectItemtwo = @"two";
         FilterItemModel *infoS = [info.sonArray objectAtIndex:[indexPath row]];
         
         [twoCell.textLabel setText: infoS.name];
+        
+        UIImageView *line = (UIImageView *)[twoCell viewWithTag:lineTag];
+        [line setHidden:NO];
+        if (indexPath.row == info.sonArray.count - 1) {
+            [line setHidden:YES];
+        }
+
         
         return twoCell;
         
@@ -540,6 +575,65 @@ static const NSString *selectItemtwo = @"two";
 
 
 
+
+-(UIView *)tableViewSelectView:(UITableView *)tableView
+{
+    
+    FilterHeaderItem *item = (FilterHeaderItem *)[self.headView viewWithTag:700 + tableView.tag];
+    
+    CGFloat wight = [UIScreen mainScreen].bounds.size.width;
+    
+    if (item.type != FilterItemType_Distance) {
+        
+        wight = wight/2;
+        
+    }
+    
+    
+    
+    UIView *selectBk = [[UIView alloc]initWithFrame:CGRectMake(0, 0, wight, 39.0)];
+    
+    
+    [selectBk setBackgroundColor:[UIColor whiteColor]];
+    
+    UIImageView *topLine = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, wight, 0.5)];
+  
+    [topLine setBackgroundColor:
+     [UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0]];
+    [selectBk addSubview:topLine];
+    
+    UIImageView *bottomline = [[UIImageView alloc]initWithFrame:CGRectMake(0, 40, wight, 0.5)];
+    [bottomline setBackgroundColor:
+     [UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0]];
+    [selectBk addSubview:bottomline];
+    
+    if (tableView != self.towClassTableView1) {
+        
+        UIImageView *checkImageView = [[UIImageView alloc]initWithFrame:CGRectMake(wight - 20,16,13, 8)];
+        
+        [checkImageView setImage:[UIImage imageNamed:@"FilterItemSelect"]];
+        
+        [selectBk addSubview:checkImageView];
+        
+    }else
+    {
+        UIImageView *vline = [[UIImageView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2-0.5, 0,0.5 ,40 )];
+        
+        [vline setBackgroundColor:
+         [UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1.0]];
+        
+        [selectBk addSubview:vline];
+        
+    }
+    
+    
+    
+    
+    
+    
+    return selectBk;
+    
+}
 
 
 
